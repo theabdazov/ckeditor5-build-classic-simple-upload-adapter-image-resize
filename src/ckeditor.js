@@ -26,6 +26,8 @@ import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
+import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
+import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 
 export default class ClassicEditor extends ClassicEditorBase {}
 
@@ -50,7 +52,9 @@ ClassicEditor.builtinPlugins = [
 	Paragraph,
 	PasteFromOffice,
 	Table,
-	TableToolbar
+	TableToolbar,
+	SimpleUploadAdapter,
+	ImageResize
 ];
 
 // Editor configuration.
