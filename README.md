@@ -1,72 +1,152 @@
-CKEditor 5 classic editor build
-========================================
+#### Note:
 
-[![npm version](https://badge.fury.io/js/%40ckeditor%2Fckeditor5-build-classic.svg)](https://www.npmjs.com/package/@ckeditor/ckeditor5-build-classic)
-[![Build Status](https://travis-ci.org/ckeditor/ckeditor5-build-classic.svg?branch=master)](https://travis-ci.org/ckeditor/ckeditor5-build-classic)
-<br>
-[![Dependency Status](https://david-dm.org/ckeditor/ckeditor5-build-classic/status.svg)](https://david-dm.org/ckeditor/ckeditor5-build-classic)
-[![devDependency Status](https://david-dm.org/ckeditor/ckeditor5-build-classic/dev-status.svg)](https://david-dm.org/ckeditor/ckeditor5-build-classic?type=dev)
+**This is a custom build of CKEditor 5 with Simple Upload Adapter and Image Resize Plugins**
+>It is important that you use the stable branch of a build, not the master branch. The master branch might contain changes which are not yet compatible with the versions of CKEditor 5 source packages that were published on npm.
 
-The classic editor build for CKEditor 5. Read more about the [classic editor build](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/overview.html#classic-editor) and see the [demo](https://ckeditor.com/docs/ckeditor5/latest/examples/builds/classic-editor.html).
-
-![CKEditor 5 classic editor build screenshot](https://c.cksource.com/a/1/img/npm/ckeditor5-build-classic.png)
+>The ckfinder and easyimage plugins has been removed
 
 ## Documentation
 
-See:
+Please check CKEditor 5 Editor official documentation:
 
-* [Installation](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/installation.html) for how to install this package and what it contains.
-* [Basic API](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/basic-api.html) for how to create an editor and interact with it.
-* [Configuration](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/configuration.html) for how to configure the editor.
-* [Creating custom builds](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/development/custom-builds.html) for how to customize the build (configure and rebuild the editor bundle).
+-   [Documentation](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/overview.html)
+-   [Basic API](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/basic-api.html)
+-   [Configuration](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/configuration.html)
+-   [Creating custom builds](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/development/custom-builds.html)
+-   [Angular](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/angular.html)
 
 ## Quick start
 
-First, install the build from npm:
+### Angular
+
+Installation
 
 ```bash
-npm install --save @ckeditor/ckeditor5-build-classic
+npm i @ckeditor/ckeditor5-angular
+npm i ckeditor5-build-classic-simple-upload-adapter-image-resize
 ```
 
-And use it in your website:
+Import the CKEditorModule module
+```js
+//...
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+ 
+@NgModule({
+  imports: [
+    //... 
+    CKEditorModule
+  ],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+```js
+import {Component} from '@angular/core';
+import {CKEditor5} from '@ckeditor/ckeditor5-angular';
+import ClassicEditor from 'ckeditor5-build-classic-simple-upload-adapter-image-resize';
+
+@Component({
+    selector: 'app-root',
+    template:  `<ckeditor [editor]="editor" [config]="config"></ckeditor>`,
+    styles: [``],
+})
+export class AppComponent {
+
+  editor = ClassicEditor;
+
+  config: CKEditor5.Config = {
+    image: {
+      // image plugin config
+      toolbar: [ 'imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
+      styles: [
+        'full',
+        'alignLeft',
+        'alignRight'
+      ]
+    },
+    simpleUpload: {
+      // The URL that the images are uploaded to.
+      uploadUrl: "http://example.com",
+      // Headers sent along with the XMLHttpRequest to the upload server.
+      headers: {
+       "X-CSRF-TOKEN": "CSFR-Token",
+        Authorization: "Bearer <JSON Web Token>"
+      }
+    }
+  };
+}
+```
+
+### JS
+
+Installation
+
+```bash
+npm i ckeditor5-build-classic-simple-upload-adapter
+```
+
+```js
+import ClassicEditor from 'ckeditor5-build-classic-simple-upload-adapter';
+
+// Or using the CommonJS version:
+// const ClassicEditor = require('ckeditor5-build-classic-simple-upload-adapter');
+
+ClassicEditor
+  .create(document.querySelector('#editor'), {
+  simpleUpload: {
+      // The URL that the images are uploaded to.
+      uploadUrl: "http://example.com",
+
+      // Headers sent along with the XMLHttpRequest to the upload server.
+      headers: {
+        "X-CSRF-TOKEN": "CSFR-Token",
+        Authorization: "Bearer <JSON Web Token>"
+      }
+    }
+  })
+  .then( editor => {
+    window.editor = editor;
+  })
+  .catch( err => {
+    console.error(err.stack);
+  });
+```
+
+### HTML
+
+Installation
+
+```bash
+npm i ckeditor5-build-classic-simple-upload-adapter
+```
 
 ```html
 <div id="editor">
-	<p>This is the editor content.</p>
+  <p>This is the editor content.</p>
 </div>
-<script src="./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
+<script src="./node_modules/ckeditor5-build-classic-simple-upload-adapter/build/ckeditor.js"></script>
 <script>
-	ClassicEditor
-		.create( document.querySelector( '#editor' ) )
-		.then( editor => {
-			window.editor = editor;
-		} )
-		.catch( err => {
-			console.error( err.stack );
-		} );
+  ClassicEditor.create(document.querySelector("#editor"), {
+    simpleUpload: {
+      // The URL that the images are uploaded to.
+      uploadUrl: "http://example.com/",
+
+      // Headers sent along with the XMLHttpRequest to the upload server.
+      headers: {
+        "X-CSRF-TOKEN": "CSFR-Token",
+        Authorization: "Bearer <JSON Web Token>"
+      }
+    }
+  })
+  .then(editor => {
+    window.editor = editor;
+  })
+  .catch(err => {
+    console.error(err.stack);
+  });
 </script>
 ```
 
-Or in your JavaScript application:
-
-```js
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
-// Or using the CommonJS version:
-// const ClassicEditor = require( '@ckeditor/ckeditor5-build-classic' );
-
-ClassicEditor
-	.create( document.querySelector( '#editor' ) )
-	.then( editor => {
-		window.editor = editor;
-	} )
-	.catch( err => {
-		console.error( err.stack );
-	} );
-```
-
 **Note:** If you are planning to integrate CKEditor 5 deep into your application, it is actually more convenient and recommended to install and import the source modules directly (like it happens in `ckeditor.js`). Read more in the [Advanced setup guide](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/advanced-setup.html).
-
-## License
-
-Licensed under the terms of [GNU General Public License Version 2 or later](http://www.gnu.org/licenses/gpl.html). For full details about the license, please check the `LICENSE.md` file or [https://ckeditor.com/legal/ckeditor-oss-license](https://ckeditor.com/legal/ckeditor-oss-license).

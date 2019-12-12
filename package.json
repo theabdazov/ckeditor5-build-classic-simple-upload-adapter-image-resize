@@ -1,6 +1,6 @@
 {
   "name": "ckeditor5-build-classic-simple-upload-adapter-image-resize",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "CKEditor 5 with simple upload adapter and image resize.",
   "keywords": [
     "ckeditor5-build",
