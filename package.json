@@ -1,6 +1,6 @@
 {
   "name": "ckeditor5-build-classic-simple-upload-adapter-image-resize",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "CKEditor 5 with simple upload adapter and image resize.",
   "keywords": [
     "ckeditor5-build",
@@ -19,8 +19,8 @@
     "collaborative",
     "real-time",
     "framework",
-	"simple  upload adapter",
-	"image resize"
+    "simple upload adapter",
+    "image resize"
   ],
   "main": "./build/ckeditor.js",
   "files": [
@@ -46,7 +46,7 @@
     "@ckeditor/ckeditor5-paste-from-office": "^15.0.0",
     "@ckeditor/ckeditor5-table": "^15.0.0",
     "@ckeditor/ckeditor5-theme-lark": "^15.0.0",
-    "@ckeditor/ckeditor5-upload": "^16.0.0",
+    "@ckeditor/ckeditor5-upload": "^15.0.0",
     "eslint": "^5.5.0",
     "eslint-config-ckeditor5": "^2.0.0",
     "husky": "^1.3.1",
